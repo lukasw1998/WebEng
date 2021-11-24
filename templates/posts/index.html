@@ -1,2 +1,17 @@
 {%  extends "base.html" %}
-{%  block body %} <h1> sytle="text-align:center"  {{ name }} </h1> {%  endblock body %}
+
+{% block title %}
+    News
+{% endblock %}
+
+{%  block body %}
+
+    <div>
+        {%  for notice in notices  %}
+            <h3> {{ notice.notice_title }}</h3>
+            <p> {{ notice.notice_text }}</p>
+            <p><a class="btn btn-info" role="button"> href={% url 'delete' id=n %}  Löschen </a></p>
+        {%  endfor %}
+    </div>
+    <p><a href="{% url 'new' %}" class="btn btn-info" role="button">Neue Nachricht</a></p>
+{%  endblock  %}
