@@ -5,12 +5,21 @@
 {% endblock %}
 
 {%  block body %}
-
+    <div>
+        {% if user.is_authenticated %}
+            <p><a href="{% url 'logout' %}?next=/posts" class="btn btn-warning">Abmelden</a></p>
+        {% endif %}
+        {% if not user.is_authenticated %}
+            <p><a href="{% url 'login' %}?next=/posts" class="btn btn-warning">Anmelden</a></p>
+        {% endif %}
+    </div>
     <div>
         {%  for notice in notices  %}
             <h3> {{ notice.notice_title }}</h3>
             <p> {{ notice.notice_text }}</p>
-            <p><a class="btn btn-info" role="button"> href={% url 'delete' id=n %}  Löschen </a></p>
+            {% if user.is_staff %}
+                <p><a  href="{% url 'delete' deleteId=notice.id %}" class="btn btn-danger">  Meldung löschen </a></p>
+            {% endif %}
         {%  endfor %}
     </div>
     <p><a href="{% url 'new' %}" class="btn btn-info" role="button">Neue Nachricht</a></p>
